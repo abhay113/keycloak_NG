@@ -5,9 +5,9 @@ const kcConfig = {
     clientId: "aby-flix",
     bearerOnly: true,
     serverUrl: "http://localhost:8080",
-    realm: "master",
+    realm: "ABY-FLIX",
     realmPublicKey:
-        "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAybGRbeHZ9+084IffccgfqEmxMI3gQ42QBG5oKs+Ef4lzYf6dxjnykHT+hTDoopqcRYJ47xYGvPK+uBQNYjBhthAfSMF5vmd9iLMYPydlmsNRW9J6lNzBu1kXK5qBGVHE82ViQPeOQSB2KhiDSWAFYYGiFFT68TvCC9RjwV/rvbzyYGXSWMuCJSwlesCBKDYhCYGpuvhTUFqMvNt+FANUxJCB7QXxlZqSrEo++NsWCEGOdFBc7lrspIHP6N48dQwFqZcl9x0NWSt4hOtto1PnON5gj6OThRz9F8pyVkZL5KUU15wifw8VzfPKHe6+UPJqb7RZuxcEhh6vDTrGX5YdowIDAQAB"
+        "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvd1sPYkwFJF5eka3MaTqIPwVjJRryp5uS03MV91qGVZjFkphSfW/3cGxa16JOE1pFjRalveWcDjpfK+5JajMw1rpceABTsK1gHuvJOZk6QkiXyhwmDoH0pR5zJCbWgshlE0678+otaAbrxLYXzpsmACbZVCz+YR0eVDrUxUm6VPgNfmvJWzsMvry6/eFVIki5xV/mBzjPNeC6zwVfVK9UZl9TJ1BreF81JMJjc2zz1Jm9PLeyvzvQOBj6tqeDuSIRfsnQlir1cYe8Psta8FJ+1fEImdQuBnNnItkPU6llpfoKnjLW5K+nX1UEsxntcLgdwXGTbaJfGtacSQ/jgMVnQIDAQAB"
 };
 
 export const keycloak = new Keycloak({ store: memoryStore }, kcConfig);

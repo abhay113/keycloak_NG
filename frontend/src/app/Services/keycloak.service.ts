@@ -1,18 +1,42 @@
-import { Injectable } from '@angular/core';
-import { KeycloakService } from 'keycloak-angular';
+import { Injectable } from "@angular/core";
+import { KeycloakService } from "keycloak-angular";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class KeycloakOperationService {
     constructor(private readonly keycloak: KeycloakService) { }
 
-    isLoggedIn(): boolean {
-        return this.keycloak.isLoggedIn();
+    async isLoggedIn(): Promise<boolean> {
+        return await this.keycloak.isLoggedIn();
     }
-    logout(): void {
-        this.keycloak.logout();
+
+    async login(): Promise<void> {
+        await this.keycloak.login();
     }
-    getUserProfile(): any {
-        return this.keycloak.loadUserProfile();
+
+    async logout(): Promise<void> {
+        await this.keycloak.logout();
+        localStorage.removeItem("token"); // Remove token on logout
     }
-    // Add other methods as needed for token access, user info retrieval, etc.}
+
+    async getUserProfile(): Promise<any> {
+        const profile = await this.keycloak.loadUserProfile();
+        console.log("User profile:", profile);
+        return profile;
+    }
+
+
+    async getToken(): Promise<string | null> {
+        try {
+            const token = await this.keycloak.getToken();
+            console.log("Fetched Token:", token); 
+            if (token) {
+                localStorage.setItem("token", token);
+                console.log("Token stored in localStorage:", localStorage.getItem("token"));
+            }
+            return token;
+        } catch (error) {
+            console.error("Error fetching token:", error);
+            return null;
+        }
+    }
 }

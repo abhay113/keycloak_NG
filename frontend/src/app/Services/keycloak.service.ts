@@ -15,7 +15,8 @@ export class KeycloakOperationService {
 
     async logout(): Promise<void> {
         await this.keycloak.logout();
-        localStorage.removeItem("token"); // Remove token on logout
+        localStorage.removeItem("token");
+        localStorage.clear(); // Remove token on logout
     }
 
     async getUserProfile(): Promise<any> {
@@ -28,10 +29,11 @@ export class KeycloakOperationService {
     async getToken(): Promise<string | null> {
         try {
             const token = await this.keycloak.getToken();
-            console.log("Fetched Token:", token); 
             if (token) {
                 localStorage.setItem("token", token);
                 console.log("Token stored in localStorage:", localStorage.getItem("token"));
+                const parsedRefreshToken = this.keycloak.getKeycloakInstance().refreshTokenParsed;
+                console.log(parsedRefreshToken);
             }
             return token;
         } catch (error) {
@@ -39,4 +41,20 @@ export class KeycloakOperationService {
             return null;
         }
     }
+
+    async refreshToken(): Promise<string | null> {
+        try {
+            const refreshed = await this.keycloak.updateToken(30);
+            if (refreshed) {
+                const newToken = await this.keycloak.getToken();
+                localStorage.setItem('token', newToken);
+                return newToken;
+            }
+            return null;
+        } catch (error) {
+            console.error("❌ Token refresh failed:", error);
+            return null;
+        }
+    }
+
 }

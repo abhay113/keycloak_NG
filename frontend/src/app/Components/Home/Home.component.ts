@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private movieService: MovieService,
     private keyCloakService: KeycloakOperationService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
   ) { }
 
   // async ngOnInit(): Promise<void> {
@@ -32,11 +32,12 @@ export class HomeComponent implements OnInit {
   //   console.table(this.userProfile);
   // }
   async ngOnInit(): Promise<void> {
+    this.keyCloakService.initKeycloak();
     this.getAllMovies();
     // console.log("Fetching Token in HomeComponent...");
     await this.keyCloakService.getToken(); // Force store
     this.userProfile = await this.keyCloakService.getUserProfile();
-    console.table(this.userProfile);
+    // console.table(this.userProfile);
   }
 
   logout() {

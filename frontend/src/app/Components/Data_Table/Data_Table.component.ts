@@ -84,4 +84,15 @@ export class Data_TableComponent implements OnInit {
       });
     });
   }
+
+  deleteMovie(id: number): void {
+    if (confirm('Are you sure you want to delete this movie?')) {
+      this.movieService.deleteMovie(id).subscribe(() => {
+        console.log(`Movie with id ${id} deleted`);
+        this.ngOnInit();
+        // this.movieService.getAllMovies(); // Refresh the list after deletion
+      });
+    }
+  }
+
 }

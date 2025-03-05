@@ -42,4 +42,10 @@ export class MovieService {
       }
     });
   }
+
+  deleteMovie(id: number) {
+    return this.http.delete(`${this.backendUrl}/deleteMovie/${id}`);
+  }
+
+
 }

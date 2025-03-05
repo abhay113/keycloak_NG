@@ -1,21 +1,15 @@
 <div class="home-page-container">
-  <div class="header">
-    <img src="../../../assets/logo.png" alt="Logo" />
-    <div class="search-container">
-      <input type="text" [(ngModel)]="searchText" placeholder="Search movies..." (keyup)="onSearchChange($event)" />
-    </div>
 
-    <div (click)="logout()" class="logout-btn">Logout</div>
-  </div>
+  <app-header (searchChange)="onSearchChange($event)" (logoutClicked)="logout()" [isAdmin]="isAdmin"></app-header>
+</div>
 
-  <div class="card-container">
-    <div class="movie-card" *ngFor="let movie of movies">
-      <img [src]="movie.imageUrl" alt="{{ movie.title }}" />
-      <div class="card-content">
-        <h3>{{ movie.title }}</h3>
-        <p>{{ movie.releaseYear }}</p>
-        <p>[{{ movie.genre }}]</p>
-      </div>
+<div class="card-container">
+  <div class="movie-card" *ngFor="let movie of movies">
+    <img [src]="movie.imageUrl" alt="{{ movie.title }}" />
+    <div class="card-content">
+      <h3>{{ movie.title }}</h3>
+      <p>{{ movie.releaseYear }}</p>
+      <p>[{{ movie.genre }}]</p>
     </div>
   </div>
 </div>

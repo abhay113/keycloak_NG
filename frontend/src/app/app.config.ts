@@ -12,6 +12,7 @@ import {
   withInterceptorsFromDi,
 } from "@angular/common/http";
 import { AuthInterceptor } from "./Interceptor/check-auth.interceptor";
+import { JWT_OPTIONS, JwtHelperService } from "@auth0/angular-jwt";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,6 +20,8 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideAnimationsAsync(),
     KeycloakService,
+    JwtHelperService,
+    { provide: JWT_OPTIONS, useValue: {} },
     {
       provide: APP_INITIALIZER,
       useFactory: initializeKeycloak,

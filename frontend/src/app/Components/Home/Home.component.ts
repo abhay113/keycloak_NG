@@ -6,38 +6,34 @@ import { KeycloakOperationService } from '../../Services/keycloak.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { HeaderComponent } from '../header/header.component'; // Import HeaderComponent
 
 @Component({
   selector: 'app-home',
   templateUrl: './Home.component.html',
   styleUrls: ['./Home.component.css'],
   standalone: true,
-  imports: [MatSnackBarModule, CommonModule, FormsModule, RouterModule],
+  imports: [MatSnackBarModule, CommonModule, FormsModule, RouterModule, HeaderComponent], // Include HeaderComponent
 })
 export class HomeComponent implements OnInit {
   movies: Movie[] = [];
   searchText: string = '';
   userProfile: any | null = null;
-  isTooltipVisible = false;
+
+  isAdmin: boolean = false;
 
   constructor(
     private movieService: MovieService,
     private keyCloakService: KeycloakOperationService,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) { }
 
-  // async ngOnInit(): Promise<void> {
-  //   this.getAllMovies();
-  //   this.userProfile = await this.keyCloakService.getUserProfile();
-  //   console.table(this.userProfile);
-  // }
   async ngOnInit(): Promise<void> {
     this.keyCloakService.initKeycloak();
     this.getAllMovies();
-    // console.log("Fetching Token in HomeComponent...");
-    await this.keyCloakService.getToken(); // Force store
+    await this.keyCloakService.getToken();
     this.userProfile = await this.keyCloakService.getUserProfile();
-    // console.table(this.userProfile);
+    this.isAdminFn();
   }
 
   logout() {
@@ -63,7 +59,13 @@ export class HomeComponent implements OnInit {
     this.snackBar.open(message, 'Close', { duration: 5000 });
   }
 
-  public onSearchChange(event: any) {
-    this.searchText = event.target.value;
+  onSearchChange(searchValue: string) {
+    this.searchText = searchValue;
+  }
+  isAdminFn() {
+    setTimeout(() => {
+      this.isAdmin = !this.keyCloakService.isAdmin(); // Wait before checking
+      console.log("Is this a normal user?", this.isAdmin);
+    }, 500); // Give time for token to be stored
   }
 }

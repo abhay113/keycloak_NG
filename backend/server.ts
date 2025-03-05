@@ -39,12 +39,69 @@ app.get("/getAllMovies", async (req: Request, res: Response) => {
 });
 
 app.get("/getMovieByID/:id", async (req: Request, res: Response) => {
-    const movieId = req.params.id;
+    const movieId = req.params.id.toString();
+    console.log('movie id type is : ' , typeof(movieId));
+    
     try {
         const response = await axios.get(`${JSON_SERVER_URL}/${movieId}`);
         res.json(response.data);
     } catch (error) {
         res.status(404).json({ error: "Movie not found" });
+    }
+});
+
+// app.post("/createMovie", async (req: Request, res: Response) => {
+//     try {
+//         const newMovie = req.body;
+//         console.log("new movie getting from FE ", newMovie);
+
+//         const response = await axios.post(JSON_SERVER_URL, newMovie);
+//         res.status(201).json(response.data);
+//     } catch (error) {
+//         res.status(500).json({ error: "Failed to add movie" });
+//     }
+// });
+
+
+app.use(express.json()); // Ensure JSON is parsed
+
+app.post("/createMovie", async (req: Request, res: Response) => {
+    console.log("🔥 API HIT: /createMovie 🔥");
+    console.log("Received Data:", req.body);
+
+    try {
+        const newMovie = req.body;
+        newMovie.id = String(req.body.id);
+        console.log("newMovies:", newMovie);
+        
+        const response = await axios.post(JSON_SERVER_URL, newMovie);
+
+        console.log("✅ JSON Server Response:", response.data);
+        res.status(201).json(response.data);
+    } catch (error) {
+        console.error("❌ Error:", error);
+        res.status(500).json({ error: "Failed to add movie" });
+    }
+});
+
+app.put("/updateMovie/:id", async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const updatedMovie = req.body;
+        const response = await axios.put(`${JSON_SERVER_URL}/${id}`, updatedMovie);
+        res.json(response.data);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to update movie" });
+    }
+});
+
+app.delete("/deleteMovie/:id", async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        await axios.delete(`${JSON_SERVER_URL}/${id}`);
+        res.json({ message: "Movie deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to delete movie" });
     }
 });
 

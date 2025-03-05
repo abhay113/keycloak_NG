@@ -1,0 +1,44 @@
+<h2 mat-dialog-title class="dialog-title">Add Movie</h2>
+
+<div mat-dialog-content class="dialog-content">
+
+    <mat-form-field appearance="outline">
+        <mat-label>Id</mat-label>
+        <input matInput type="number" [(ngModel)]="id" placeholder="Enter movie Id" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput type="text" [(ngModel)]="movieTitle" placeholder="Enter movie title" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Release Year</mat-label>
+        <input matInput type="number" [(ngModel)]="releaseYear" placeholder="Enter release year" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>Genres</mat-label>
+        <mat-chip-listbox #chipList>
+            <mat-chip *ngFor="let genre of genres" [removable]="true" (removed)="removeGenre(genre)">
+                {{ genre }}
+                <mat-icon matChipRemove>x</mat-icon>
+            </mat-chip>
+            <input matInput #genreInput (keydown.enter)="addGenre(genreInput)" placeholder="Enter Genres" />
+        </mat-chip-listbox>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="outline">
+        <mat-label>Image URL</mat-label>
+        <input matInput type="text" [(ngModel)]="imageUrl" placeholder="Enter Image URL" />
+    </mat-form-field>
+
+</div>
+
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="closeDialog()">Cancel</button>
+    <button mat-flat-button color="primary" (click)="saveMovie()"
+        [disabled]="!movieTitle || !releaseYear || !id || !genres || !imageUrl">
+        Save
+    </button>
+</div>

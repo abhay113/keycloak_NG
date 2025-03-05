@@ -1,0 +1,29 @@
+table {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.home-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+.mat-icon-button {
+    color: white;
+    /* Change icon color */
+    background-color: #1976d2;
+    /* Button background color */
+    border-radius: 20%;
+    /* Make it circular */
+    padding: 2px;
+    /* Adjust padding */
+    transition: background 0.3s;
+}
+
+.mat-icon-button:hover {
+    background-color: #1565c0;
+    /* Darker shade on hover */
+}

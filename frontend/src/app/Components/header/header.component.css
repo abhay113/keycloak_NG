@@ -1,0 +1,53 @@
+
+.header {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 0px;
+    background-color: inherit;
+    gap: 1rem;
+    z-index: 100;
+    margin-top: 2rem;
+  }
+  
+  .header img {
+    width: 100px;
+    height: auto;
+  }
+  
+  .search-container {
+    flex-grow: 1;
+    margin: 0 10px;
+  }
+  
+  .search-container input {
+    width: 100%;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .logout-btn {
+   
+    background-color: #e50914;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  
+  .add-btn {
+    background-color: #4b9dfc;
+    color: white;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .add-btn:disabled {
+    cursor: not-allowed;
+  }

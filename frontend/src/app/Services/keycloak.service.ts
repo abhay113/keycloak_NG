@@ -1,11 +1,10 @@
 import { Injectable } from "@angular/core";
 import { KeycloakService } from "keycloak-angular";
-
+import { JwtHelperService } from '@auth0/angular-jwt';
 @Injectable({ providedIn: "root" })
 export class KeycloakOperationService {
-    constructor(private readonly keycloak: KeycloakService) {
-
-    }
+    constructor(private readonly keycloak: KeycloakService,
+        private jwtHelper: JwtHelperService) { }
     async initKeycloak(): Promise<void> {
         const authenticated = await this.keycloak.isLoggedIn();
         console.log("user is logged in init keycloak");
@@ -119,5 +118,32 @@ export class KeycloakOperationService {
                 localStorage.setItem('token_expiry', expiryTime.toString());
             }
         }
+    }
+
+
+
+    public isAdmin() {
+        const token = localStorage.getItem('token');
+    
+        // Check if token is properly stored
+        if (!token) {
+            console.warn("Token not found in localStorage!");
+            return false;
+        }
+    
+        console.log("Retrieved token:", token);
+    
+        try {
+            const decryptedToken = this.jwtHelper.decodeToken(token);
+            console.log("Decoded token:", decryptedToken);
+    
+            if (decryptedToken?.preferred_username === 'admin_user') {
+                return true;
+            }
+        } catch (error) {
+            console.error("Error decoding token:", error);
+        }
+    
+        return false;
     }
 }
